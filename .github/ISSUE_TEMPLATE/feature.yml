@@ -1,0 +1,28 @@
+name: Feature
+description: Propose a focused public API or adapter.
+title: "feat: "
+labels: [feature]
+body:
+  - type: textarea
+    attributes:
+      label: Problem
+      description: What user-visible problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed API
+      description: Include a minimal TypeScript example.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Security and failure semantics
+      description: Cover trust boundaries, resource limits, and fail-open/fail-closed behavior.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true
