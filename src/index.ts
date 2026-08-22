@@ -7,6 +7,14 @@ export {
   type ReplayConsumeResult,
   type ReplayStore,
 } from "./replay.js";
+export {
+  InMemoryIdempotencyStore,
+  type IdempotencyClaimInput,
+  type IdempotencyClaimResult,
+  type IdempotencyCompleteInput,
+  type IdempotencyStore,
+  type InMemoryIdempotencyStoreOptions,
+} from "./idempotency.js";
 
 /** The possible outcomes of a webhook signature verification attempt. */
 export type WebhookVerificationResult =

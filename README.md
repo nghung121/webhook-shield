@@ -69,6 +69,33 @@ if (replay.status !== "accepted") {
 }
 ```
 
+## Idempotent event handling
+
+Use a separate idempotency store around the business side effect. A lease token
+prevents a stale worker from marking work completed after another worker has
+reclaimed it. The included in-memory adapter is intentionally development-only.
+
+```ts
+import { InMemoryIdempotencyStore } from "webhook-shield";
+
+const idempotency = new InMemoryIdempotencyStore();
+const claim = await idempotency.claim({
+  key: `stripe:${event.id}`,
+  leaseExpiresAt: new Date(Date.now() + 30_000),
+});
+
+if (claim.status !== "claimed") {
+  return new Response("Already processing or completed", { status: 200 });
+}
+
+await applyBusinessSideEffect(event);
+await idempotency.complete({ key: `stripe:${event.id}`, token: claim.token });
+```
+
+This coordinates a single claim; it does not make arbitrary external side
+effects exactly-once. A production store must be durable, atomic, and retain
+completed keys for an application-chosen bounded period.
+
 ## Compatibility
 
 Node.js 20 or later. This package intentionally uses Node's audited built-in `crypto` module and has no runtime dependencies.
