@@ -1,5 +1,13 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
+export {
+  InMemoryReplayStore,
+  type InMemoryReplayStoreOptions,
+  type ReplayConsumeInput,
+  type ReplayConsumeResult,
+  type ReplayStore,
+} from "./replay.js";
+
 /** The possible outcomes of a webhook signature verification attempt. */
 export type WebhookVerificationResult =
   | { ok: true; timestamp: number }

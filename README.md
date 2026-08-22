@@ -47,7 +47,27 @@ const event = JSON.parse(new TextDecoder().decode(rawRequestBody));
 - Malformed untrusted headers return a typed failure instead of throwing.
 - The library makes no network calls and does not collect telemetry.
 
-Webhook authentication alone does **not** prevent a valid delivery being processed twice inside the valid timestamp window. Application code must enforce idempotency using a provider event ID and durable, atomic storage. Replay-store adapters will be introduced only when their atomicity and failure semantics are explicit.
+Webhook authentication alone does **not** prevent a valid delivery being processed twice inside the valid timestamp window. Application code must enforce idempotency using a provider event ID and durable, atomic storage.
+
+## Replay protection
+
+Use the provider's stable delivery/event ID as a namespaced replay key. The
+production adapter must perform the operation atomically. `InMemoryReplayStore`
+is only for tests and one-process development; it loses all state on restart.
+
+```ts
+import { InMemoryReplayStore } from "webhook-shield";
+
+const replayStore = new InMemoryReplayStore();
+const replay = await replayStore.consume({
+  key: `stripe:${event.id}`,
+  expiresAt: new Date(Date.now() + 5 * 60_000),
+});
+
+if (replay.status !== "accepted") {
+  return new Response("Duplicate or expired webhook", { status: 409 });
+}
+```
 
 ## Compatibility
 
