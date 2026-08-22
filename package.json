@@ -19,6 +19,7 @@
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
+    "test:acceptance": "npm run build && vitest run test/public-api.acceptance.test.ts",
     "test:watch": "vitest"
   },
   "devDependencies": {

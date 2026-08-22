@@ -10,7 +10,7 @@ the repository because no GitHub remote is configured yet.
 | #3 | Add bounded Fetch Request verification | #2 | Uses raw bytes; rejects over-size and missing required headers; returns a typed result | Done |
 | #4 | Add replay-protection storage contract | #2 | Atomic consume contract and deterministic in-memory reference adapter; expiry semantics documented | Done |
 | #5 | Add idempotency storage contract | #2 | Atomic claim/complete contract; deterministic in-memory adapter; no exactly-once claim | Done |
-| #6 | Add security regression coverage | #2–#5 | Binary payload, malformed input, limits, replay, concurrency and public package smoke tests pass | Planned |
+| #6 | Add security regression coverage | #2–#5 | Binary payload, malformed input, limits, replay, concurrency and public package smoke tests pass | Done |
 | #7 | Prepare public release automation and docs | #1–#6 | CI, dependency updates, security policy, contribution/release guides and examples are present | Planned |
 
 ## Issue #3 — Add bounded Fetch Request verification
